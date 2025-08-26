@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ABC Retailers</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f0f9;
+            color: #4b3b6e;
+        }
+
+        /* Purple Navigation Bar */
+        .navbar {
+            background-color: #8e44ad; /* Purple */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #ffffff !important; /* White text */
+            font-weight: 600;
+        }
+
+            .navbar-brand i {
+                color: #f39c12; /* Icon color */
+                margin-right: 8px;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .navbar-brand:hover i {
+                transform: rotate(-15deg) scale(1.2);
+            }
+
+            .nav-link i {
+                color: #f1c40f; /* Colorful icons */
+                margin-right: 6px;
+                transition: transform 0.2s ease-in-out;
+            }
+
+            .nav-link:hover {
+                color: #ffe6ff !important;
+            }
+
+                .nav-link:hover i {
+                    transform: scale(1.2);
+                }
+
+        .nav-link {
+            border-radius: 8px;
+            padding: 5px 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+            .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+        .navbar-toggler {
+            border-color: #ffffff;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
+        }
+
+        /* Cards */
+        .card-wrapper {
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2dced;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            }
+
+        .card-body {
+            color: #4b3b6e;
+        }
+
+        /* Alerts */
+        .alert-success {
+            background-color: #e6e0f4;
+            border-color: #d1c4e9;
+            color: #4b3b6e;
+            border-radius: 12px;
+        }
+
+        .alert-danger {
+            background-color: #fbeaea;
+            border-color: #f5c6cb;
+            color: #6e3b3b;
+            border-radius: 12px;
+        }
+
+        /* Footer */
+        footer {
+            font-size: 0.9rem;
+            background-color: #f3f0f9;
+            color: #6c5b7b;
+            border-radius: 12px;
+            margin-top: 3rem;
+            padding: 1rem 0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+        }
+
+        .footer i {
+            color: #f39c12;
+        }
+
+        /* Cute buttons for actions */
+        .btn-cute {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+            .btn-cute:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-semibold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-store"></i> ABC Retailers
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Customer" asp-action="Index"><i class="fas fa-users"></i> Customers</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="Index"><i class="fas fa-box"></i> Products</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="Index"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Upload" asp-action="Index"><i class="fas fa-upload"></i> Upload</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy"><i class="fas fa-shield-alt"></i> Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container card-wrapper">
+        <main role="main">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top bg-light text-muted mt-5 py-3 footer">
+        <div class="container d-flex justify-content-between">
+            <span>&copy; 2025 - ABC Retailers - <a asp-controller="Home" asp-action="Privacy">Privacy</a></span>
+            <span><i class="fas fa-store me-1"></i> Your one-stop shop for the best products</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

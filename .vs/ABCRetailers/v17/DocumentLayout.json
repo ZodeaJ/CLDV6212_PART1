@@ -1,11 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Documents\\ABCRetailers\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{AB0AAB1D-738B-439D-A094-169527B8FD6F}|..\\..\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\Functions.csproj|c:\\users\\lab_services_student\\desktop\\cldv_part2_functions\\functions\\local.settings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -13,24 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "local.settings.json",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\local.settings.json",
-              "RelativeDocumentMoniker": "..\\..\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\local.settings.json",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\local.settings.json",
-              "RelativeToolTip": "..\\..\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\local.settings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-06T08:56:17.949Z",
-              "EditorCaption": ""
             }
           ]
         }

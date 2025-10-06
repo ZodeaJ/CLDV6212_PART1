@@ -14,7 +14,7 @@ namespace ABCRetailers.Models
 
 
         [Display(Name = "Order ID")]
-        public string OrderId => RowKey;
+        public string Id { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Customer")]
@@ -32,27 +32,24 @@ namespace ABCRetailers.Models
         public string ProductName { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Order Date")]
-        [DataType(DataType.Date)]
-        public DateTime OrderDate { get; set; } = DateTime.Today;
+        [Display(Name = "Order Placed (UTC)")]
+        public DateTimeOffset? OrderDateUtc { get; set; }
 
         [Required]
         [Display(Name = "Quantity")]
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
-        public int Quantity { get; set; } 
+        public int Quantity { get; set; }
 
-        [Display(Name = "Unit Price")]
-        [DataType(DataType.Currency)]
-        public double UnitPrice { get; set; } 
+        [Display(Name = "Unit Price"), DataType(DataType.Currency)]
+        public decimal UnitPrice { get; set; }
 
         [Required]
         [Display(Name = "Total Price")]
         [DataType(DataType.Currency)]
         public double TotalPrice { get; set; }
 
-        [Required]
-        [Display(Name = "Status")]
-        public string Status { get; set; } = "Submitted";
+        [Required, Display(Name = "Status")]
+        public OrderStatus Status { get; set; } = OrderStatus.Submitted;
     }
 
     public enum OrderStatus

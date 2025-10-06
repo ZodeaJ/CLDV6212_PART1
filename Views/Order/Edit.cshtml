@@ -29,11 +29,12 @@
                 </div>
             </div>
 
-            <div class="row mt-3">
+            <div class="row">
                 <div class="col-md-6">
-                    <label asp-for="OrderDate" class="form-label"></label>
-                    <input asp-for="OrderDate" class="form-control" type="date" />
-                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Order Date (Local)</label>
+                        <input class="form-control" value="@FormatLocal(Model.OrderDateUtc)" readonly />
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Quantity" class="form-label"></label>
@@ -84,26 +85,28 @@
                 <h6>Order Summary</h6>
             </div>
             <div class="card-body">
-                <p><strong>Order ID:</strong><br /><small class="text-muted">@Model.OrderId</small></p>
+                <p><strong>Order ID:</strong><br /><small class="text-muted">@Model.Id</small></p>
                 <p><strong>Created:</strong><br /><small class="text-muted">@Model.Timestamp?.ToString("MMM dd, yyyy HH:mm")</small></p>
-                <p><strong>Current Status:</strong><br /><span class="badge bg-@(GetStatusBadgeClass(Model.Status))">@Model.Status</span></p>
+                <p><strong>Current Status:</strong><br /><span class="badge bg-@Badge(Model.Status)">@Model.Status</span>
+                </p>
             </div>
         </div>
     </div>
 </div>
 
 @functions {
-    string GetStatusBadgeClass(string status)
+    string FormatLocal(DateTimeOffset? dto)
+        => dto.HasValue ? dto.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm") : "-";
+
+    string Badge(OrderStatus status) => status switch
     {
-        return status?.ToLower() switch
-        {
-            "submitted" => "primary",
-            "processing" => "info",
-            "completed" => "success",
-            "cancelled" => "danger",
-            _ => "secondary"
-        };
-    }
+        OrderStatus.Submitted => "primary",
+        OrderStatus.Processing => "info",
+        OrderStatus.Completed => "success",
+        OrderStatus.Cancelled => "danger",
+        _ => "secondary"
+    };
+}
 }
 
 @section Scripts {

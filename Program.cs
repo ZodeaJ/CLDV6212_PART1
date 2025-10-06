@@ -12,6 +12,15 @@ namespace ABCRetailers
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Register HttpClient and Function API client
+            builder.Services.AddHttpClient("Functions", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["Functions:BaseUrl"] ?? "http://localhost:7030/api");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
+            builder.Services.AddScoped<IFunctionsApi, FunctionsApiClient>();
+
             // Register Azure Storage Service
             builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
 

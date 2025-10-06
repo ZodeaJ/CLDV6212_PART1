@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABCRetailers", "ABCRetailers.csproj", "{544DBAD2-8160-4DAE-817D-A9F6288472F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "..\..\Desktop\CLDV_PART2_FUNCTIONS\Functions\Functions.csproj", "{AB0AAB1D-738B-439D-A094-169527B8FD6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{544DBAD2-8160-4DAE-817D-A9F6288472F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{544DBAD2-8160-4DAE-817D-A9F6288472F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{544DBAD2-8160-4DAE-817D-A9F6288472F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0AAB1D-738B-439D-A094-169527B8FD6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0AAB1D-738B-439D-A094-169527B8FD6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0AAB1D-738B-439D-A094-169527B8FD6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0AAB1D-738B-439D-A094-169527B8FD6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E2446FB-A417-4584-94AA-4E83A0AB6672}
 	EndGlobalSection
 EndGlobal

@@ -42,7 +42,7 @@ namespace ABCRetailers.Services
                 await _tableServiceClient.CreateTableIfNotExistsAsync("Orders");
                 _logger.LogInformation("Tables created successfully");
 
-                // Create blob containers with retry logic
+                // Create blob containers
                 var productImagesContainer = _blobServiceClient.GetBlobContainerClient("productimages");
                 await productImagesContainer.CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
 
@@ -122,13 +122,12 @@ namespace ABCRetailers.Services
 
             try
             {
-                // Use IfMatch condition for optimistic concurrency
                 await tableClient.UpdateEntityAsync(entity, entity.ETag, TableUpdateMode.Replace);
                 return entity;
             }
             catch (Azure.RequestFailedException ex) when (ex.Status == 412)
             {
-                // Precondition failed - entity was modified by another process
+
                 _logger.LogWarning("Entity update failed due to ETag mismatch for {EntityType} with RowKey {RowKey}", typeof(T).Name, entity.RowKey);
                 throw new InvalidOperationException("The entity was modified by another process. Please refresh and try again.");
             }

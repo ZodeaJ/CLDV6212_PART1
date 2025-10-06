@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "..\\..\\Desktop\\CLDV_PART2_FUNCTIONS\\Functions\\Functions.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ABCRetailers.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

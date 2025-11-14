@@ -1,17 +1,16 @@
 ﻿using ABCRetailers.Models;
 using ABCRetailers.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ABCRetailers.Controllers
 {
+    [Authorize] 
     public class CustomerController : Controller
     {
         private readonly IFunctionsApi _api;
 
-        public CustomerController(IFunctionsApi api)
-        {
-            _api = api;
-        }
+        public CustomerController(IFunctionsApi api) => _api = api;
 
         public async Task<IActionResult> Index()
         {
@@ -21,12 +20,10 @@ namespace ABCRetailers.Controllers
 
         public IActionResult Create() => View();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Customer customer)
         {
             if (!ModelState.IsValid) return View(customer);
-
             try
             {
                 await _api.CreateCustomerAsync(customer);
@@ -39,26 +36,20 @@ namespace ABCRetailers.Controllers
                 return View(customer);
             }
         }
-
         public async Task<IActionResult> Edit(string id)
         {
-            if (string.IsNullOrEmpty(id)) return NotFound();
-
+            if (string.IsNullOrWhiteSpace(id)) return NotFound();
             var customer = await _api.GetCustomerAsync(id);
-            if (customer == null) return NotFound();
-
-            return View(customer);
+            return customer is null ? NotFound() : View(customer);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, Customer customer)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Customer customer)
         {
             if (!ModelState.IsValid) return View(customer);
-
             try
             {
-                await _api.UpdateCustomerAsync(id, customer);
+                await _api.UpdateCustomerAsync(customer.CustomerId, customer);
                 TempData["Success"] = "Customer updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
@@ -81,7 +72,6 @@ namespace ABCRetailers.Controllers
             {
                 TempData["Error"] = $"Error deleting customer: {ex.Message}";
             }
-
             return RedirectToAction(nameof(Index));
         }
     }

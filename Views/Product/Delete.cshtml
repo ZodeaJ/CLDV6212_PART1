@@ -1,0 +1,79 @@
+﻿@model ABCRetailers.Models.Product
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-exclamation-triangle"></i> Delete Product
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h5 class="alert-heading">Warning!</h5>
+                    You are about to delete this product. This action cannot be undone.
+                    @if (Model.StockAvailable > 0)
+                    {
+                        <br>
+                    
+                        <strong>Note: This product has @Model.StockAvailable items in stock.</strong>
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" alt="@Model.ProductName" class="img-fluid rounded" style="max-height: 200px;">
+                        }
+                        else
+                        {
+                            <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <h5>Product Details:</h5>
+                        <dl class="row">
+                            <dt class="col-sm-4">Product Name:</dt>
+                            <dd class="col-sm-8">@Model.ProductName</dd>
+
+                            <dt class="col-sm-4">Description:</dt>
+                            <dd class="col-sm-8">@Model.Description</dd>
+
+                            <dt class="col-sm-4">Price:</dt>
+                            <dd class="col-sm-8 text-success"><strong>@Model.Price.ToString("C")</strong></dd>
+
+                            <dt class="col-sm-4">Stock Available:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-@(Model.StockAvailable > 10 ? "success" : Model.StockAvailable > 0 ? "warning" : "danger")">
+                                    @Model.StockAvailable
+                                </span>
+                            </dd>
+
+                            <dt class="col-sm-4">Product ID:</dt>
+                            <dd class="col-sm-8"><code>@Model.RowKey</code></dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="RowKey" />
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Confirm Delete
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

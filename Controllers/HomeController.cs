@@ -1,63 +1,101 @@
-using System.Diagnostics;
 using ABCRetailers.Models;
 using ABCRetailers.Models.ViewModels;
 using ABCRetailers.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace ABCRetailers.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAzureStorageService _storageService;
+        private readonly IFunctionsApi _api;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IAzureStorageService storageService)
+        public HomeController(IFunctionsApi api, ILogger<HomeController> logger)
         {
-            _storageService = storageService;
+            _api = api;
+            _logger = logger;
         }
 
+        // Public homepage displaying featured products
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
-        {
-            var products = await _storageService.GetAllEntitiesAsync<Product>();
-            var customers = await _storageService.GetAllEntitiesAsync<Customer>();
-            var orders = await _storageService.GetAllEntitiesAsync<Order>();
-
-            var viewModel = new HomeViewModel
-            {
-                FeaturedProducts = products.Take(5).ToList(),
-                ProductCount = products.Count,
-                CustomerCount = customers.Count,
-                OrderCount = orders.Count
-            };
-
-            return View(viewModel);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> InitializeStorage()
         {
             try
             {
-                // Force re-initialization of storage
-                await _storageService.GetAllEntitiesAsync<Customer>(); // This will trigger initialization
-                TempData["Success"] = "Azure Storage initialized successfully!";
+                var products = await _api.GetProductsAsync() ?? new List<Product>();
+                var vm = new HomeViewModel
+                {
+                    FeaturedProducts = products.Take(8).ToList(),
+                    ProductCount = products.Count
+                };
+                return View(vm);
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"Failed to initialize storage: {ex.Message}";
+                _logger.LogError(ex, "Error loading home page");
+                var vm = new HomeViewModel
+                {
+                    FeaturedProducts = new List<Product>(),
+                    ProductCount = 0
+                };
+                return View(vm);
             }
-
-            return RedirectToAction(nameof(Index));
         }
 
+        // Administrative dashboard
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminDashboard()
+        {
+            try
+            {
+                var customers = await _api.GetCustomersAsync() ?? new List<Customer>();
+                var orders = await _api.GetOrdersAsync() ?? new List<Order>();
+
+                var model = new
+                {
+                    TotalCustomers = customers.Count,
+                    TotalOrders = orders.Count
+                };
+
+                ViewBag.AdminSummary = model;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to load Admin Dashboard data.");
+                TempData["Error"] = "Could not load Admin Dashboard data.";
+                return View();
+            }
+        }
+
+        // Customer dashboard
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> CustomerDashboard()
+        {
+            try
+            {
+                var userEmail = User.Identity?.Name;
+                ViewBag.UserEmail = userEmail;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to load Customer Dashboard data.");
+                TempData["Error"] = "Could not load your dashboard. Please try again.";
+                return View();
+            }
+        }
+
+        // Privacy policy and data protection information
+        [AllowAnonymous]
+        public IActionResult Privacy() => View();
+
+        // Global error handling page for application exceptions
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

@@ -36,6 +36,14 @@ namespace ABCRetailers.Services
         public async Task<List<Customer>> GetCustomersAsync()
             => await ReadJsonAsync<List<Customer>>(await _http.GetAsync(CustomersRoute));
 
+        public async Task<Customer?> GetCustomerByUsernameAsync(string username)
+        {
+            var customers = await GetCustomersAsync();
+            return customers.FirstOrDefault(c => 
+            c.Username?.Equals(username, StringComparison.OrdinalIgnoreCase) == true);
+
+        }
+
         public async Task<Customer?> GetCustomerAsync(string id)
         {
             var resp = await _http.GetAsync($"{CustomersRoute}/{id}");
@@ -112,13 +120,21 @@ namespace ABCRetailers.Services
         }
 
         public async Task DeleteProductAsync(string id)
-            => (await _http.DeleteAsync($"{ProductsRoute}/{id}")).EnsureSuccessStatusCode();
+     => (await _http.DeleteAsync($"{ProductsRoute}/{id}")).EnsureSuccessStatusCode();
 
         // -- Orders --
         public async Task<List<Order>> GetOrdersAsync()
         {
             var dtos = await ReadJsonAsync<List<OrderDto>>(await _http.GetAsync(OrdersRoute));
             return dtos.Select(ToOrder).ToList();
+        }
+
+        public async Task<List<Order>> GetOrdersByCustomerIdAsync(string customerId)
+        {
+            var orders = await GetOrdersAsync();
+            return orders.Where(o =>
+                o.CustomerId?.Equals(customerId, StringComparison.OrdinalIgnoreCase) == true)
+                .ToList();
         }
 
         public async Task<Order?> GetOrderAsync(string id)

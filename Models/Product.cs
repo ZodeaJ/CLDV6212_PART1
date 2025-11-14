@@ -8,6 +8,7 @@ namespace ABCRetailers.Models
     {
         public string PartitionKey { get; set; } = "Product";
         public string RowKey { get; set; } = Guid.NewGuid().ToString();
+
         public DateTimeOffset? Timestamp { get; set; }
         public ETag ETag { get; set; }
 

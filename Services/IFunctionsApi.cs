@@ -7,6 +7,7 @@ namespace ABCRetailers.Services
         // Customers
         Task<List<Customer>> GetCustomersAsync();
         Task<Customer?> GetCustomerAsync(string id);
+        Task<Customer?> GetCustomerByUsernameAsync(string id);
         Task<Customer> CreateCustomerAsync(Customer c);
         Task<Customer> UpdateCustomerAsync(string id, Customer c);
         Task DeleteCustomerAsync(string id);
@@ -24,6 +25,8 @@ namespace ABCRetailers.Services
         Task<Order> CreateOrderAsync(string customerId, string productId, int quantity);
         Task UpdateOrderStatusAsync(string id, string newStatus);
         Task DeleteOrderAsync(string id);
+
+        Task<List<Order>> GetOrdersByCustomerIdAsync(string customerId);
 
         // Uploads
         Task<string> UploadProofOfPaymentAsync(IFormFile file, string? orderId, string? customerName);

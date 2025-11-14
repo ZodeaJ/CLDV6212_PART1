@@ -20,10 +20,10 @@
                 <i class="fas fa-info-circle"></i>
                 <strong>Customer ID:</strong>
                 @(string.IsNullOrEmpty(Model.CustomerId)
-                    ? "N/A"
-                    : (Model.CustomerId.Length > 8
-                    ? Model.CustomerId.Substring(0, 8) + "..."
-                    : Model.CustomerId))
+                                ? "N/A"
+                                : (Model.CustomerId.Length > 8
+                                ? Model.CustomerId.Substring(0, 8) + "..."
+                                : Model.CustomerId))
             </div>
 
 
